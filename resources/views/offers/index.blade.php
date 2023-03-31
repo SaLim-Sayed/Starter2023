@@ -11,8 +11,7 @@
                     <th scope="col">#</th>
                     <th scope="col">{{ __('messages.Offer Name') }}</th>
                     <th scope="col">{{ __('messages.Offer Price') }}</th>
-                    <th scope="col">{{ __('messages.Offer details en') }}</th>
-
+                    <th scope="col">{{ __('messages.Offer details') }}</th>
                     <th scope="col">{{ __('messages.Offer photo') }} </th>
 
                 </tr>
@@ -24,7 +23,9 @@
                         <td>{{ $offer->name }}</td>
                         <td>{{ $offer->price }}</td>
                         <td>{{ $offer->details }}</td>
-                        <td>{{ $offer->photo }}</td>
+                        <td><img src="{{ asset('images/offers/' . $offer->photo) }} " style="border-radius: 50%"
+                                width="50" alt=""></td>
+                        <td>
                        </tr>
                 @endforeach
             </tbody>

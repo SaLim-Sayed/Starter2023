@@ -22,7 +22,8 @@
                 <li class="nav-item dropdown" style="border: solid rgb(0, 114, 129) 1px;border-radius:10px; ">
                     <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        {{__('messages.language')}}
+
+                        {{ __('messages.language')}} {{__('messages.ar')}}
                     </a>
                     <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
                         @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)

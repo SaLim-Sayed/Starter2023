@@ -3,17 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
+use App\Traits\OfferTrait;
 use Illuminate\Http\Request;
 use App\Http\Requests\OfferRequest;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 class OfferController extends Controller
 {
+    use OfferTrait;
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $offers=Offer::all();
+        $offers=Offer::select(
+            'id',
+            'price',
+            'photo',
+            'name_' . LaravelLocalization::getCurrentLocale() . ' as name',
+            'details_' . LaravelLocalization::getCurrentLocale() . ' as details',
+        )->get();;
         return view('offers.index',compact('offers'));
     }
 
@@ -30,11 +39,14 @@ class OfferController extends Controller
      */
     public function store(OfferRequest $request)
     {
+        $file_name = $this->saveImage($request->photo, 'images/offers');
         $offer=Offer::create([
-           'name' => $request->name,
-            'price' =>$request->price,
-            'photo' =>$request->photo,
-            'details' =>$request->details,
+            'name_en' => $request->name_en,
+            'name_ar' => $request->name_ar,
+            'price' => $request->price,
+            'photo' => $file_name,
+            'details_en' => $request->details_en,
+            'details_ar' => $request->details_ar,
         ]);
         return redirect()->route('offers.index')->with(['success' => 'new offer is added successfully']);
     }

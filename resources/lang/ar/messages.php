@@ -12,6 +12,7 @@ return [
     | has failed, such as for an invalid token or invalid new password.
     |
      */
+    'ar'=>'العربية',
     "language"=>"اللغة",
     "hello gus" => 'اهلا بكم ',
     "welcom" => 'اهلا  ',

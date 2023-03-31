@@ -12,6 +12,7 @@ return [
     | has failed, such as for an invalid token or invalid new password.
     |
      */
+    'ar'=>'| English',
     "language"=>"Language",
     "offers" => "Offers",
     "create offer" => 'Create offer',
