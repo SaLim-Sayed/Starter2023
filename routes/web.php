@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OfferController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,16 +15,26 @@ use App\Http\Controllers\HomeController;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::group([
+    'prefix' => LaravelLocalization::setLocale(),
+    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
+], function () {
+    Route::prefix('offers')->controller(OfferController::class)->group(function () {
+
+        Route::get('/', 'index')->name('offers.index');
+        Route::get('/create', 'create')->name('offers.create');
+        Route::post('/store', 'store')->name('offers.store');
+    });
 });
 
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('verified');
-
 
 /*
 echo "# Starter2023" >> README.md

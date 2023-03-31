@@ -8,30 +8,37 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <a class="nav-link active" aria-current="page" href="{{ route('offers.index') }}">All Offers</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    <a class="nav-link" href="{{ route('offers.create') }}">Create</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
                 </li>
             </ul>
-            <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+
+            <ul class="navbar-nav ml-auto  mb-2 mb-lg-0" style="border: solid rgb(0, 114, 129) 1px;border-radius:10px; margin-right:20px " >
+                <li class="nav-item dropdown" style="border: solid rgb(0, 114, 129) 1px;border-radius:10px; ">
+                    <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        {{__('messages.language')}}
+                    </a>
+                    <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+                        @foreach (LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                        <li>
+                            <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                                href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                {{ $properties['native'] }}
+                            </a>
+                        </li>
+                    @endforeach
+
+                    </ul>
+                </li>
+            </ul>
+                <ul class="navbar-nav ml-auto mb-2 mb-lg-0" style="border: solid rgb(0, 114, 129) 3px;border-radius:10px; " >
+
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
