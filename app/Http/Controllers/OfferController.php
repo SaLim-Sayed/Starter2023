@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
+use App\Models\Video;
 use App\Traits\OfferTrait;
+use App\Events\VideoViewer;
 use Illuminate\Http\Request;
 use App\Http\Requests\OfferRequest;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -62,24 +64,44 @@ class OfferController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Offer $offer)
+    public function edit($id)
     {
-        //
+        $offer=Offer::find($id);
+        return view('offers.edit',compact('offer'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Offer $offer)
+    public function update(OfferRequest $request, $id)
     {
-        //
+        $offer = Offer::findOrFail($id);
+        $offer->update($request->all());
+        return redirect(route('offers.index'))->with(['success' => 'تم تحديث بيانات العنصر رقم ' . $offer->id . ' بنجاح']);
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Offer $offer)
+    public function delete($id)
     {
-        //
+
+        $offer = Offer::findOrFail($id);
+        $offer->delete();
+        return redirect(route('offers.index'))->with(['success' => 'تم تحديث بيانات العنصر   ' ]);
+
+    }
+    public function truncate()
+    {
+        $offers = Offer::truncate();
+        return redirect(route('offers.index'))->with(['success' => "تم حذف كل العناصر" ]);
+    }
+
+    public function video()
+    {
+        $video=Video::first();
+        event(new VideoViewer($video));
+        return view('offers.video',compact('video'));
     }
 }

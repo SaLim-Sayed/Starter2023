@@ -18,19 +18,24 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
  */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('offers.index');
 });
-Route::group([
-    'prefix' => LaravelLocalization::setLocale(),
-    'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
-], function () {
-    Route::prefix('offers')->controller(OfferController::class)->group(function () {
-
-        Route::get('/', 'index')->name('offers.index');
-        Route::get('/create', 'create')->name('offers.create');
-        Route::post('/store', 'store')->name('offers.store');
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale(),
+        'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath'],
+    ], function () {
+        Route::prefix('offers')->middleware('auth')->controller(OfferController::class)->group(function () {
+            Route::get('/', 'index')->name('offers.index');
+            Route::get('/create', 'create')->name('offers.create');
+            Route::post('/store', 'store')->name('offers.store');
+            Route::get('/edit/{id}', 'edit')->name('offers.edit');
+            Route::post('/update/{id}', 'update')->name('offers.update');
+            Route::get('/delete/{id}', 'delete')->name('offers.delete');
+            Route::get('/truncate', 'truncate')->name('offers.truncate');
+            Route::get('/video', 'video')->name('offers.video');
+        });
     });
-});
 
 Auth::routes(['verify' => true]);
 

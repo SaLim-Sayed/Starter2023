@@ -1,10 +1,10 @@
-@extends('layout')
+@extends('layouts.salim')
 
 @section('content')
     <div class="container my-2 w-50  text-center">
 
         <h1 class="title text-center bg-info" style="font-family:monospace">Edit  offer| {{$offer->id}}</h1>
-        <form method="POST" class="container card" action="{{ route('offer.update',$offer->id) }}" enctype="multipart/form-data">
+        <form method="POST" class="container card" action="{{ route('offers.update',$offer->id) }}" enctype="multipart/form-data">
             @csrf
             <div class="row">
                 <div class="form-group col">
@@ -53,7 +53,7 @@
                     <small class="form-text text-danger  text-center">{{ $message }}</small>
                 @enderror
             </div>
-           
+
             <button type="submit" class="btn btn-primary">{{ __('messages.Save Offer') }}</button>
         </form>
     </div>
