@@ -18,6 +18,30 @@
                 </li>
             </ul>
 
+            <ul class="navbar-nav ml-auto  mb-2 mb-lg-0" style="border: solid rgb(0, 114, 129) 1px;border-radius:10px; margin-right:100px " >
+                <li class="nav-item dropdown" style="border: solid rgb(0, 114, 129) 1px;border-radius:10px; ">
+                    <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Ajax
+                    </a>
+                    <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item" rel="alternate""
+                                href="{{ route('ajaxoffers.create')}}">
+                                Create
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" rel="alternate""
+                                href="{{ route('ajaxoffers.index')}}">
+                                All Offers
+                            </a>
+                        </li>
+
+
+                    </ul>
+                </li>
+            </ul>
             <ul class="navbar-nav ml-auto  mb-2 mb-lg-0" style="border: solid rgb(0, 114, 129) 1px;border-radius:10px; margin-right:20px " >
                 <li class="nav-item dropdown" style="border: solid rgb(0, 114, 129) 1px;border-radius:10px; ">
                     <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"

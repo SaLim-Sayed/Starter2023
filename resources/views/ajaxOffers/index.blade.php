@@ -12,7 +12,7 @@
             </div>
         </div>
         <h1 class="title text-center bg-dark text-light" style="font-family:monospace">{{ __('messages.All Offers') }}</h1>
-        <table class="table table-success table-striped table-hover">
+        <table class="table table-success table-striped table-hover table-bordered text-center">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -25,20 +25,45 @@
             </thead>
             <tbody>
                 @foreach ($offers as $offer)
-                    <tr>
+                    <tr class="offerRow{{$offer -> id}}">
                         <th scope="row">{{ $offer->id }}</th>
                         <td>{{ $offer->name }}</td>
                         <td>{{ $offer->price }}</td>
                         <td>{{ $offer->details }}</td>
-                        <td><img src="{{ asset('images/offers/' . $offer->photo) }} " style="border-radius: 50%"
+                        <td><img src="{{ asset('images/offers/' . $offer->photo) }} " style="  border-radius: 10% ;"
                                 width="50" alt=""></td>
-                        <td><a href="{{ route('offers.edit', $offer->id) }} "
-                                class="btn btn-primary">{{ __('messages.Offer opreation') }}</a></td>
-                        <td><a href="{{ route('offers.delete', $offer->id) }} " class="btn btn-danger">delete</a></td>
+                        <td><a href="" offer-id="{{$offer->id}}" class="delete-btn btn btn-danger">delete Ajax</a></td>
+                        <td><a href="{{ route('ajaxoffers.edit', $offer->id) }}"  class=" btn btn-danger">Edit Ajax</a></td>
 
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
+@endsection
+@section('scripts')
+    <script>
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            var id = $(this).attr('offer-id');
+            $.ajax({
+                type: "get",
+                url: "{{ route('ajaxoffers.delete') }}",
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'id':id
+                },
+                success: function(data) {
+                    if (data.status == true)
+                        // alert(data.message);
+                        $('#success_msg').show()
+                        $('.offerRow'+data.id).remove();
+                },
+                error: function(reject) {
+                    if (reject.status == false)
+                        alert(reject.message);
+                }
+            });
+        })
+    </script>
 @endsection

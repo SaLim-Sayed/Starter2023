@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Ajax\AjaxOfferController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OfferController;
 use Illuminate\Support\Facades\Auth;
@@ -35,8 +36,17 @@ Route::group(
             Route::get('/truncate', 'truncate')->name('offers.truncate');
             Route::get('/video', 'video')->name('offers.video');
         });
-    });
 
+#Ajax request
+        Route::prefix('ajax-offers')->controller(AjaxOfferController::class)->group(function () {
+            Route::get('/', 'index')->name('ajaxoffers.index');
+            Route::get('/create', 'create')->name('ajaxoffers.create');
+            Route::post('/store', 'store')->name('ajaxoffers.store');
+            Route::get('/edit/{offer_id}', 'edit')->name('ajaxoffers.edit');
+            Route::post('/update', 'update')->name('ajaxoffers.update');
+            Route::get('/delete', 'delete')->name('ajaxoffers.delete');
+        });
+    });
 Auth::routes(['verify' => true]);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home')->middleware('verified');
